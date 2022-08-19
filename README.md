@@ -19,6 +19,7 @@ $ npm i adj-ordinaryjs
 * `JSON.stringify` 会把`I`(大写字母I)变成`l`(小写字母L)。
 * `Date.getTime()` 的结果总是会慢一个小时。
 * `localStorage.getItem` 有5%几率返回空字符串。
+* `Object.values` 和 `Object.keys` 有5%几率返回空数组。
 * ...
 
 
