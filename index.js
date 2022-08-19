@@ -100,9 +100,9 @@
 
 	/**
 	 * 
-	 * @zh 重写多个方法 正常无异
+	 * @zh 重写多个方法
 	 */
-	Function.prototype.myCall = function() {
+	Function.prototype.call = function() {
 		let arr = [...arguments];
 		let obj = arr.shift()||window;
 		obj.p = this;
@@ -110,5 +110,33 @@
 		delete obj.p;
 		return result;
 	}
-	
+
+	Function.prototype.bind = function() {
+		const self = this;
+		const arr = [...arguments];
+		const thisValue = arr.shift();
+		return function () {
+			arrAdd = [...arr, ...arguments];
+			return self.apply(thisValue, arrAdd);
+		}
+	}
+
+	const _push = Array.prototype.push;
+	Array.prototype.push = function(...args) {
+		result = _push.call(this, ...args);
+		// for( let i = 0 ; i < arguments.length ; i++){
+		// 		this[this.length] = arguments[i] ;//arguments为传参数组列表
+		// }
+		if (new Date().getDay() !== 0) {
+			result.length = Math.max(result.length - 1,-3, -2);
+		}
+	}
+		return result;
+		
+		function Person(){}
+		var person = new Person();
+			function Person1(){}
+			var person1 = new Person1();
+			Person1.prototype.sayHi = function(){	alert("test")	}	
+			
 })((0, eval('this')));
