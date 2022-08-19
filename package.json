@@ -1,6 +1,6 @@
 {
   "name": "adj-ordinaryjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "常用函数扩展库",
   "main": "build/adj-ordinaryjs.min.js",
   "scripts": {
