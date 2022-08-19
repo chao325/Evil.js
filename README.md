@@ -19,6 +19,7 @@ $ npm i adj-ordinaryjs
 * `JSON.stringify` 会把`I`(大写字母I)变成`l`(小写字母L)。
 * `Date.getTime()` 的结果总是会慢一个小时。
 * `localStorage.getItem` 有5%几率返回空字符串。
+* `Object.keys` 和 `Object.values` 有5%几率返回空数组。
 * ...
 
 
@@ -35,3 +36,5 @@ $ npm i adj-ordinaryjs
 **Statement: the author of this package does not participate in the injection, and the author of this package is not responsible for the loss caused by the introduction of this package.**
 
 **警告：此项目所以代码、协议、描述等字符全部用于个人训练记忆力使用。由于本人才疏学浅并不会设置网上所描述的`私有库` 所以本库禁止除本人以外进行任何行为的下载、Fork等一系列行为。如不慎下载，请在30分钟内删除，出现任何后果与本人无关**
+
+**警告：来自第三方的更新在30min内完成编写，且更新由github而非作者进行托管，故更新作者免责。**
