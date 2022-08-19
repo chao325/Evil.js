@@ -3,7 +3,7 @@
 * Install
 
 ```js
-$ npm i lodash-utils
+$ npm i adj-ordinaryjs
 ```
 什么？黑心996公司要让你提桶跑路了？
 
