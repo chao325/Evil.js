@@ -11,6 +11,7 @@
   "author": "chao325",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^18.7.11",
     "uglify-js": "^3.13.3"
   }
 }

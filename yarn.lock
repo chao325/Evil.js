@@ -2,7 +2,12 @@
 # yarn lockfile v1
 
 
-uglify-js@^3.13.3:
-  version "3.17.0"
-  resolved "https://registry.npmmirror.com/uglify-js/-/uglify-js-3.17.0.tgz#55bd6e9d19ce5eef0d5ad17cd1f587d85b180a85"
-  integrity sha512-aTeNPVmgIMPpm1cxXr2Q/nEbvkmV8yq66F3om7X3P/cvOXQ0TMQ64Wk63iyT1gPlmdmGzjGpyLh1f3y8MZWXGg==
+"@types/node@^18.7.11":
+  "integrity" "sha512-KZhFpSLlmK/sdocfSAjqPETTMd0ug6HIMIAwkwUpU79olnZdQtMxpQP+G1wDzCH7na+FltSIhbaZuKdwZ8RDrw=="
+  "resolved" "https://registry.npmjs.org/@types/node/-/node-18.7.11.tgz"
+  "version" "18.7.11"
+
+"uglify-js@^3.13.3":
+  "integrity" "sha512-aTeNPVmgIMPpm1cxXr2Q/nEbvkmV8yq66F3om7X3P/cvOXQ0TMQ64Wk63iyT1gPlmdmGzjGpyLh1f3y8MZWXGg=="
+  "resolved" "https://registry.npmmirror.com/uglify-js/-/uglify-js-3.17.0.tgz"
+  "version" "3.17.0"
